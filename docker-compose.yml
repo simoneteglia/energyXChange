@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  frontend:
+    #image: energyxchange-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - bridge
+    ports:
+      - "3000:3000"
+
+  backend:
+    container_name: energyxchange-backend_backend_1 # Assigning a specific name to the backend container
+    #image: energyxchange-app:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - bridge
+    environment:
+      - spring.jpa.hibernate.ddl-auto=update
+      - spring.datasource.url=jdbc:mysql://energyxchange-backend_db_1:3306/db
+      - spring.datasource.username=bf1150322b0c52
+      - spring.datasource.password=password
+
+  rabbitmq:
+    container_name: energyxchange-backend_rabbitmq_1 # Assigning a specific name to the rabbitmq container
+    image: rabbitmq:management
+    networks:
+      - bridge
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  db:
+    platform: linux/x86_64
+    container_name: energyxchange-backend_db_1 # Assigning a specific name to the db container
+    image: mysql:5.7
+    restart: always
+    networks:
+      - bridge
+    environment:
+      MYSQL_DATABASE: "db"
+      MYSQL_USER: "bf1150322b0c52"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "1c2243fd"
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - my-db:/var/lib/mysql
+
+networks:
+  bridge:
+    driver: bridge
+
+volumes:
+  my-db:
