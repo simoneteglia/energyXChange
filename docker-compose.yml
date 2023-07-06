@@ -14,6 +14,9 @@ services:
   backend:
     container_name: energyxchange-backend_backend_1 # Assigning a specific name to the backend container
     #image: energyxchange-app:latest
+    depends_on:
+      db:
+        condition: service_healthy
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -41,6 +44,10 @@ services:
     container_name: energyxchange-backend_db_1 # Assigning a specific name to the db container
     image: mysql:5.7
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
     networks:
       - bridge
     environment:
@@ -53,8 +60,7 @@ services:
     expose:
       - "3306"
     volumes:
-      - my-db:/var/lib/mysql
-
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
 networks:
   bridge:
     driver: bridge
