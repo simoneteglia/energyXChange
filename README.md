@@ -4,7 +4,7 @@ This is the project for the exam of "Laboratory of advanced programming" held by
 
 ## How to execute
 1. Clone the repository with `git clone`
-2. Move into the folder with `cd energyxChange`
+2. Move into the folder with `cd energyXChange`
 3. Run the command `docker-compose up`
 
 ## Team Members
