@@ -7,6 +7,8 @@ This is the project for the exam of "Laboratory of advanced programming" held by
 2. Move into the folder with `cd energyXChange`
 3. Run the command `docker-compose up`
 
+> :warning: **If you are using a macbook with M1/M2**: Decomment the line that changes the platform attribute for the db in the docker-compose.yml
+
 ## Team Members
 - Simone Teglia, 1836794
 - Tommaso Bersani, 1840825
