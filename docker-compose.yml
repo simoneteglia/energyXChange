@@ -40,7 +40,7 @@ services:
       - "15672:15672"
 
   db:
-    platform: linux/x86_64
+    #platform: linux/x86_64   #Decomment this line if you're using a macbook with apple silicon chips
     container_name: energyxchange-backend_db_1 # Assigning a specific name to the db container
     image: mysql:5.7
     restart: always
